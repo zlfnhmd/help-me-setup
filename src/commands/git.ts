@@ -1,6 +1,6 @@
 import { Command, flags } from '@oclif/command';
 import * as inquirer from 'inquirer';
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 
 export default class Git extends Command {
   static description = 'Helper for setting up git configs';
@@ -14,14 +14,13 @@ export default class Git extends Command {
   async run() {
     const { flags } = this.parse(Git);
 
-    let username = flags.username;
-    let email = flags.email;
+    let { username, email } = flags;
 
     if (!username) {
       const responses: any = await inquirer.prompt([
         {
           name: 'username',
-          message: 'username:',
+          message: 'Your name:',
           type: 'input',
         },
       ]);
@@ -31,37 +30,19 @@ export default class Git extends Command {
       const responses: any = await inquirer.prompt([
         {
           name: 'email',
-          message: 'email:',
+          message: 'Your email:',
           type: 'input',
         },
       ]);
       email = responses.email;
     }
     if (username) {
-      exec(`git config --global user.name ${username}`, (error, stdout, stderr) => {
-        if (error) {
-          this.log(`error: ${error.message}`);
-          return;
-        }
-        if (stderr) {
-          this.log(`stderr: ${stderr}`);
-          return;
-        }
-        this.log(`git username set to: ${username}`);
-      });
+      execSync(`git config --global user.name ${username}`);
+      this.log(`git username set to: ${username}`);
     }
     if (email) {
-      exec(`git config --global user.email ${email}`, (error, stdout, stderr) => {
-        if (error) {
-          this.log(`error: ${error.message}`);
-          return;
-        }
-        if (stderr) {
-          this.log(`stderr: ${stderr}`);
-          return;
-        }
-        this.log(`git email set to: ${email}`);
-      });
+      execSync(`git config --global user.email ${email}`);
+      this.log(`git email set to: ${email}`);
     }
   }
 }
