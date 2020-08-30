@@ -1,11 +1,11 @@
 import { Command, flags } from '@oclif/command';
-import { execSync } from 'child_process';
 import { readFile } from 'fs-extra';
 import { join } from 'path';
 
-import { selectSshFile, shouldUseExistingSsh, askNewSshDetails } from '../../inquirer/ssh';
-import { getExistingSshKeys, sshDirectoryPath } from '../../common/ssh';
-import { getAuthenticatedGhInstance } from '../../common/github';
+import { selectSshFile, shouldUseExistingSsh, askNewSshDetails } from 'src/inquirer/ssh';
+import { getExistingSshKeys, sshDirectoryPath } from 'src/common/ssh';
+import { getAuthenticatedGhInstance } from 'src/common/github';
+import { createSshKey } from 'src/shellScripts/ssh';
 
 export default class GithubSsh extends Command {
   static description = 'describe the command here';
@@ -32,7 +32,7 @@ export default class GithubSsh extends Command {
     } else {
       const { sshKeyName, sshKeyPassphrase } = await askNewSshDetails();
       const keyFile = join(sshDirectoryPath, sshKeyName);
-      execSync(`ssh-keygen -t rsa -b 4096 -f ${keyFile} -N ${sshKeyPassphrase} -q`);
+      await createSshKey(keyFile, sshKeyPassphrase);
       selectedSsh = sshKeyName + '.pub';
     }
     const sshData = await readFile(join(sshDirectoryPath, selectedSsh), 'utf8');
