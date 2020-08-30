@@ -2,7 +2,7 @@
 const pkg = require('../../../package.json');
 
 import { Octokit } from '@octokit/rest';
-import * as Configstore from 'configstore';
+import Configstore from 'configstore';
 
 import { createNewGithubToken } from './createNewGithubToken';
 

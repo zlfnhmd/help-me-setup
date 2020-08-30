@@ -4,7 +4,7 @@ import { askGithubCredentials, askGithub2Fa } from '../../inquirer/github';
 
 export const createNewGithubToken = async (): Promise<string> => {
   const { githubUsername, githubPassword } = await askGithubCredentials();
-  const auth = createBasicAuth({
+  const auth: any = createBasicAuth({
     username: githubUsername,
     password: githubPassword,
     async on2Fa() {

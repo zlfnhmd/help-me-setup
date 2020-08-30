@@ -2,10 +2,10 @@ import { Command, flags } from '@oclif/command';
 import { readFile } from 'fs-extra';
 import { join } from 'path';
 
-import { selectSshFile, shouldUseExistingSsh, askNewSshDetails } from 'src/inquirer/ssh';
-import { getExistingSshKeys, sshDirectoryPath } from 'src/common/ssh';
-import { getAuthenticatedGhInstance } from 'src/common/github';
-import { createSshKey } from 'src/shellScripts/ssh';
+import { selectSshFile, shouldUseExistingSsh, askNewSshDetails } from '../../inquirer/ssh';
+import { getExistingSshKeys, sshDirectoryPath } from '../../common/ssh';
+import { getAuthenticatedGhInstance } from '../../common/github';
+import { createSshKey } from '../../shellScripts/ssh';
 
 export default class GithubSsh extends Command {
   static description = 'describe the command here';
