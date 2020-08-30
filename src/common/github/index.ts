@@ -1,0 +1,1 @@
+export { getAuthenticatedGhInstance } from './getAuthenticatedGhInstance';
