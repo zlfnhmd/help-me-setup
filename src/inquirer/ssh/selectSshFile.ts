@@ -1,5 +1,5 @@
 import * as inquirer from 'inquirer';
-import { getExistingSshKeys } from '../../utils/ssh/getExistingSshKeys';
+import { getExistingSshKeys } from '../../common/ssh';
 
 export const selectSshFile = (sshList?: string[]): Promise<{ selectedSsh: string }> => {
   const questions = [

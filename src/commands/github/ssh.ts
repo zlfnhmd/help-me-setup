@@ -4,7 +4,7 @@ import { readFile } from 'fs-extra';
 import { join } from 'path';
 
 import { selectSshFile, shouldUseExistingSsh, askNewSshDetails } from '../../inquirer/ssh';
-import { getExistingSshKeys, sshDirectoryPath } from '../../utils/ssh/getExistingSshKeys';
+import { getExistingSshKeys, sshDirectoryPath } from '../../common/ssh';
 import { getAuthenticatedGhInstance } from '../../common/github';
 
 export default class GithubSsh extends Command {
