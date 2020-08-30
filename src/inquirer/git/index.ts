@@ -1,0 +1,1 @@
+export { askGitConfigs } from './askGitConfigs';
