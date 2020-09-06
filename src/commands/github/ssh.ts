@@ -1,14 +1,11 @@
 import { Command, flags } from '@oclif/command';
-import { readFile } from 'fs-extra';
-import { join } from 'path';
 
-import { selectSshFile, shouldUseExistingSsh, askNewSshDetails } from '../../inquirer/ssh';
-import { getExistingSshKeys, sshDirectoryPath } from '../../common/ssh';
+import { getSshKey } from '../../common/ssh';
 import { getAuthenticatedGhInstance } from '../../common/github';
-import { createSshKey } from '../../shellScripts/ssh';
+import { askGithubSshLabel } from '../../inquirer/github';
 
 export default class GithubSsh extends Command {
-  static description = 'describe the command here';
+  static description = 'Helper for setting up github ssh connection';
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -18,28 +15,12 @@ export default class GithubSsh extends Command {
     const github = await getAuthenticatedGhInstance();
     this.log('Authenticated with github successfully');
 
-    const existingSshKeys = await getExistingSshKeys();
-    let selectedSsh: string;
-    let useExistingSsh = false;
-    if (existingSshKeys.length > 0) {
-      const res = await shouldUseExistingSsh();
-      useExistingSsh = res.useExistingSsh;
-    }
+    const sshKey = await getSshKey();
+    const { githubKeyLabel } = await askGithubSshLabel();
 
-    if (useExistingSsh) {
-      const res = await selectSshFile(existingSshKeys);
-      selectedSsh = res.selectedSsh;
-    } else {
-      const { sshKeyName, sshKeyPassphrase } = await askNewSshDetails();
-      const keyFile = join(sshDirectoryPath, sshKeyName);
-      await createSshKey(keyFile, sshKeyPassphrase);
-      selectedSsh = sshKeyName + '.pub';
-    }
-    const sshData = await readFile(join(sshDirectoryPath, selectedSsh), 'utf8');
     await github.users.createPublicSshKeyForAuthenticated({
-      // Todo: Accept user input
-      title: 'test',
-      key: sshData,
+      title: githubKeyLabel,
+      key: sshKey,
     });
     this.log('Successfully added ssh connection');
   }
