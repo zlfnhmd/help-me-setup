@@ -5,12 +5,12 @@ export const askGitConfigs = (): Promise<{ gitEmail: string; gitUserName: string
     {
       name: 'gitUserName',
       type: 'input',
-      message: 'Enter your name:',
+      message: 'Enter name:',
     },
     {
       name: 'gitEmail',
       type: 'input',
-      message: 'Enter your email:',
+      message: 'Enter email:',
     },
   ];
 
