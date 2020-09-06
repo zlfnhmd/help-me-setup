@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Installing the bare necessities. The rest of the stuff will be installed with an interactive cli
+# Installing the bare necessities. The rest of the stuff can be installed with the interactive cli
 
-apt install curl
-
-apt-get install git
+apt install apt-transport-https curl git-all
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 export NVM_DIR="$HOME/.nvm"

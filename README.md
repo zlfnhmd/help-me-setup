@@ -11,5 +11,5 @@
 #### Install all prerequisites(optional):
 To install the latest stable version of `git`, `node`, `npm` and `curl` use the following script. This will install node and npm via nvm.
 ```shell
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/zlfnhmd/setup/master/prerequisites.sh)"
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/zlfnhmd/help-me-setup/master/prerequisites.sh)"
 ```
