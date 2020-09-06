@@ -12,7 +12,7 @@ export const createNewGithubToken = async (): Promise<string> => {
       return github2FaCode;
     },
     token: {
-      scopes: ['write:public_key'],
+      scopes: ['write:public_key', 'read:public_key'],
       note: 'help-me-setup',
     },
   });
